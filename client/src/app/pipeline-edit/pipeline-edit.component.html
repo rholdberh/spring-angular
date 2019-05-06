@@ -1,0 +1,124 @@
+<mat-card>
+  <form #pipelineForm="ngForm" (ngSubmit)="save(pipelineForm.value)">
+    <mat-card-header class="card">
+      <mat-card-title><h2>{{data.id ? 'Edit ' : 'Add'}} configuration {{data.id ? 'id' : ''}} {{data.id}} </h2></mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <!--<input type="hidden" name="href" [(ngModel)]="pipeline.href">-->
+      <input type="hidden" name="id" [(ngModel)]="data.id">
+
+
+      <mat-form-field>
+        <input matInput placeholder="Pipeline System" [(ngModel)]="data.system"
+               required name="system" #pipeline>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <input matInput placeholder="Pipeline Location" [(ngModel)]="data.location"
+               required name="location" #pipeline>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select env</mat-label>
+        <mat-select [(ngModel)]="data.env" required name="env" #pipeline>
+          <mat-option *ngFor="let e of envlist" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <br>
+      <h3>Source system configuration</h3>
+      <section class="example-section">
+        <mat-checkbox class="example-margin" [(ngModel)]="isSourceHive" name="sourceHiveChecked">Hive</mat-checkbox>
+      </section>
+      <br>
+      <mat-form-field *ngIf="!isSourceHive">
+        <input matInput placeholder="Source URL" [(ngModel)]="data.s_url"
+               required name="s_url" #pipeline>
+      </mat-form-field>
+      <mat-form-field *ngIf="!isSourceHive">
+        <input matInput placeholder="Source User" [(ngModel)]="data.s_user"
+               required name="s_user" #pipeline>
+      </mat-form-field>
+
+
+      <mat-form-field *ngIf="isSourceHive">
+        <mat-label>Hive env</mat-label>
+        <mat-select [(ngModel)]="data.s_url" required name="s_url" #pipeline>
+          <mat-option *ngFor="let e of hivelist" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Source Schema" [(ngModel)]="data.s_schema"
+               required name="s_schema" #pipeline>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Source JDBC</mat-label>
+        <mat-select [(ngModel)]="data.s_jdbc" required name="s_jdbc" #pipeline>
+          <mat-option *ngFor="let e of jdbclist" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <h3>Target system configuration</h3>
+      <section class="example-section">
+        <mat-checkbox class="example-margin" [(ngModel)]="isTargetHive" name="targetHiveChecked">Hive</mat-checkbox>
+      </section>
+      <br>
+      <mat-form-field *ngIf="!isTargetHive">
+        <input matInput placeholder="Target URL" [(ngModel)]="data.t_url"
+               required name="t_url" #pipeline>
+      </mat-form-field>
+      <mat-form-field *ngIf="!isTargetHive">
+        <input matInput placeholder="target User" [(ngModel)]="data.t_user"
+               required name="t_user" #pipeline>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="isTargetHive">
+        <mat-label>Hive env</mat-label>
+        <mat-select [(ngModel)]="data.t_url" required name="t_url" #pipeline>
+          <mat-option *ngFor="let e of hivelist" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Target Schema" [(ngModel)]="data.t_schema"
+               required name="t_schema" #pipeline>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select Target JDBC</mat-label>
+        <mat-select [(ngModel)]="data.t_jdbc" required name="t_jdbc" #pipeline>
+          <mat-option *ngFor="let e of jdbclist" [value]="e.value">
+            {{e.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <h3>Other</h3>
+      <mat-form-field>
+        <input matInput placeholder="JSON" [(ngModel)]="data.json" required name="json" #pipeline>
+      </mat-form-field>
+
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button  mat-raised-button  type="submit" [disabled]="!pipelineForm.form.valid">Save</button>
+      <a mat-button routerLink="/pipeline-list">Cancel</a>
+      <a mat-button [href]="fileUrl" download="{{data.system}}_{{data.location}}.json">Download JSON Config</a>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
+<mat-card-footer>
+  {{error}}
+</mat-card-footer>

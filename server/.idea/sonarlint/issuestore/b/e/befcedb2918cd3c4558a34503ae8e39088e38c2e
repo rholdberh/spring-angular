@@ -1,0 +1,5 @@
+
+hsquid:S4488#"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(Õ‘¥È8þÊ–›¥-
+^squid:S4684$"@Replace this persistent entity with a simple POJO or DTO object.(Ó†èð8©É¿¥¥-
+V
+squid:S106%"9Replace this use of System.out or System.err by a logger.(€»’½8¶‰õœ¥-
